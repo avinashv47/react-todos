@@ -1,1 +1,47 @@
+* {
+    box-sizing: border-box;
+}
 
+body {
+    height: 100vh;
+    overflow: hidden;
+    background-color: #ddd !important;
+}
+
+.App {
+    margin: 15% auto;
+}
+
+.todo-list-group {
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+}
+
+.list-item {
+    border: 1px solid #ddd;
+    padding: 1.5%;
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: 1em 2fr 1em;
+    align-items: center;
+    column-gap: 1em;
+}
+
+.completed {
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.please-do {
+    text-decoration: none;
+}
+
+.todo-text {
+    width: 90%;
+    text-wrap: wrap;
+}
+
+.delete-icon {
+    float: right;
+}

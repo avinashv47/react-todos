@@ -27,14 +27,19 @@ function reducer(state, action) {
         ...state,
         todosList: state.todosList.filter((t) => t.id !== value),
       };
-
+    case "status_change":
+      return {
+        ...state,
+        todosList: state.todosList.map((todo) => {
+          return todo.id === value.id ? value : todo;
+        }),
+      };
     default:
       throw Error("Unknown action.");
   }
 }
 
 export default function AddTodo() {
-
   const [state, dispatch] = useReducer(reducer, {
     todoText: "",
     todosList: [],
@@ -81,6 +86,14 @@ export default function AddTodo() {
     });
   }
 
+  function todoStatusChange(todo) {
+    console.log("change >> ", todo);
+    dispatch({
+      event: "status_change",
+      value: todo,
+    });
+  }
+
   function newTodoText(ev) {
     dispatch({
       event: "on_change",
@@ -108,7 +121,11 @@ export default function AddTodo() {
           </Col>
         </Row>
       </Form>
-      <Todo todos={state.todosList} onDelete={deleteTodo} />
+      <Todo
+        todos={state.todosList}
+        onDelete={deleteTodo}
+        onChange={todoStatusChange}
+      />
     </>
   );
 }

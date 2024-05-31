@@ -1,24 +1,24 @@
-import { ListGroup } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
+import '../App.css';
 
-export default function Todo({ todos, onDelete }) {
+export default function Todo({ todos, onDelete, onChange }) {
   return (
     <div>
-      <ListGroup>
+      <ul className="todo-list-group">
         {todos.map((todo) => {
           return (
-            <ListGroup.Item key={todo.id}>
-              <span>
-                <input type="checkbox" />
+            <li key={todo.id} className={"list-item " + (todo.completed ? 'completed' : 'please-do')}>
+              <span className="done-checkbox">
+                <input type="checkbox" checked={todo.completed} onChange={(ev) => onChange({...todo, completed: ev.target.checked})} />
               </span>
-              {todo.todo}{" "}
-              <span onClick={() => onDelete(todo.id)}>
+              <span className="todo-text">{todo.todo}</span>
+              <span className="delete-icon" onClick={() => onDelete(todo.id)}>
                 <Icon.Trash />
               </span>
-            </ListGroup.Item>
+            </li>
           );
         })}
-      </ListGroup>
+      </ul>
     </div>
   );
 }
