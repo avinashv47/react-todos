@@ -12,6 +12,11 @@ body {
     margin: 15% auto;
 }
 
+.todo-form {
+    position: relative;
+    left: 2em;
+}
+
 .todo-list-group {
     display: flex;
     list-style: none;
@@ -20,6 +25,7 @@ body {
 
 .list-item {
     border: 1px solid #ddd;
+    border-radius: 5px;
     padding: 1.5%;
     background-color: #fff;
     display: grid;

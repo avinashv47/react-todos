@@ -1,4 +1,5 @@
 import axios from "axios";
+import '../App.css';
 
 import { useReducer, useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
@@ -103,7 +104,7 @@ export default function AddTodo() {
 
   return (
     <>
-      <Form onSubmit={addTodo}>
+      <Form onSubmit={addTodo} className="todo-form">
         <Row>
           <Col>
             <Form.Group>
