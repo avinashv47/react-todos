@@ -1,8 +1,8 @@
 import axios from "axios";
-import '../App.css';
+import "../App.css";
+import TodoInputForm from "./todo-input-form";
 
 import { useReducer, useEffect } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
 import Todo from "./todo";
 
 function reducer(state, action) {
@@ -12,11 +12,6 @@ function reducer(state, action) {
       return {
         ...state,
         todosList: value,
-      };
-    case "on_change":
-      return {
-        ...state,
-        todoText: value,
       };
     case "add_todo":
       return {
@@ -41,13 +36,11 @@ function reducer(state, action) {
 }
 
 export default function AddTodo() {
-  const [state, dispatch] = useReducer(reducer, {
-    todoText: "",
-    todosList: [],
-  });
+  const [state, dispatch] = useReducer(reducer, { todosList: [] });
+  // const todosList = [];
 
   useEffect(() => {
-    const todosList = async () => {
+    const todosListCall = async () => {
       try {
         const {
           data: { todos },
@@ -57,7 +50,7 @@ export default function AddTodo() {
         console.log(error);
       }
     };
-    todosList();
+    todosListCall();
   }, []);
 
   function initialLoad(todos) {
@@ -67,13 +60,13 @@ export default function AddTodo() {
     });
   }
 
-  function addTodo(event) {
+  function addTodo(event, newTodo) {
     event.preventDefault();
     dispatch({
       event: "add_todo",
       value: {
         id: state.todosList.length + 1,
-        todo: state.todoText,
+        todo: newTodo,
         completed: false,
         userId: Math.ceil(Math.random() * 100 - 1),
       },
@@ -88,45 +81,27 @@ export default function AddTodo() {
   }
 
   function todoStatusChange(todo) {
-    console.log("change >> ", todo);
     dispatch({
       event: "status_change",
       value: todo,
     });
   }
 
-  function newTodoText(ev) {
-    dispatch({
-      event: "on_change",
-      value: ev.target.value,
-    });
-  }
+  // function newTodoText(ev) {
+  //   dispatch({
+  //     event: "on_change",
+  //     value: ev.target.value,
+  //   });
+  // }
 
   return (
-    <>
-      <Form onSubmit={addTodo} className="todo-form">
-        <Row>
-          <Col>
-            <Form.Group>
-              <Form.Control
-                type="text"
-                placeholder="Enter todo..."
-                name="addTodoInput"
-                onChange={newTodoText}
-                value={state.todoText}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Button type="submit">Add</Button>
-          </Col>
-        </Row>
-      </Form>
+    <div>
+      <TodoInputForm addNew={addTodo} />
       <Todo
         todos={state.todosList}
         onDelete={deleteTodo}
         onChange={todoStatusChange}
       />
-    </>
+    </div>
   );
 }
